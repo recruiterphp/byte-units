@@ -4,11 +4,14 @@ namespace ByteUnits;
 
 final readonly class PowerScale
 {
-    public function __construct(private int $base, private array $scale, private ?int $precision)
+    /**
+     * @param array<string, int> $scale
+     */
+    public function __construct(private int $base, private array $scale, private int $precision)
     {
     }
 
-    public function scaleToUnit($quantity, $unit)
+    public function scaleToUnit(string $quantity, ?string $unit): string
     {
         if ('0' === $quantity) {
             return '0';
@@ -21,7 +24,7 @@ final readonly class PowerScale
         );
     }
 
-    public function scaleFromUnit($quantity, string $unit)
+    public function scaleFromUnit(int|float|string $quantity, string $unit): float|int
     {
         return $quantity * bcpow(
             $this->base,
@@ -38,16 +41,18 @@ final readonly class PowerScale
         );
     }
 
-    public function normalizeNameOfUnit($unitAsString)
+    public function normalizeNameOfUnit(string $unitAsString): string
     {
         foreach ($this->scale as $unit => $_) {
             if (strtolower($unit) === strtolower($unitAsString)) {
                 return $unit;
             }
         }
+
+        return $unitAsString;
     }
 
-    public function normalUnitFor($quantity)
+    public function normalUnitFor($quantity): int|string|null
     {
         if (0 === $quantity) {
             return 'B';
@@ -58,6 +63,8 @@ final readonly class PowerScale
                 return $unit;
             }
         }
+
+        return null;
     }
 
     public function isBaseUnit(string $unit): bool

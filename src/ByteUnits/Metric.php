@@ -25,60 +25,32 @@ class Metric extends System
         parent::__construct($numberOfBytes, new Formatter(self::scale(), $formatWithPrecision));
     }
 
-    /**
-     * @param int $numberOf
-     */
-    public static function kilobytes($numberOf): self
+    public static function kilobytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'kB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Metric
-     */
-    public static function megabytes($numberOf)
+    public static function megabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'MB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Metric
-     */
-    public static function gigabytes($numberOf)
+    public static function gigabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'GB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Metric
-     */
-    public static function terabytes($numberOf)
+    public static function terabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'TB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Metric
-     */
-    public static function petabytes($numberOf)
+    public static function petabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'PB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Metric
-     */
-    public static function exabytes($numberOf)
+    public static function exabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'EB'));
     }

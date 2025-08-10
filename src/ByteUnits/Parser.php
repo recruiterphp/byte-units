@@ -2,24 +2,21 @@
 
 namespace ByteUnits;
 
-class Parser
+readonly class Parser
 {
     private \ReflectionClass $system;
 
     /**
      * @param class-string $system
+     *
      * @throws \ReflectionException
      */
-    public function __construct(private readonly PowerScale $scale, string $system)
+    public function __construct(private PowerScale $scale, string $system)
     {
         $this->system = new \ReflectionClass($system);
     }
 
     /**
-     * @param string $quantityWithUnit
-     *
-     * @return System
-     *
      * @throws ParseException
      * @throws \ReflectionException
      */

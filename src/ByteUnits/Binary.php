@@ -18,82 +18,44 @@ class Binary extends System
     private const int BASE = 1024;
 
     private static ?PowerScale $scale = null;
-    private static $parser;
+    private static ?Parser $parser = null;
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Binary
-     */
-    public static function kilobytes($numberOf)
+    public static function kilobytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'KiB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Binary
-     */
-    public static function megabytes($numberOf)
+    public static function megabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'MiB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Binary
-     */
-    public static function gigabytes($numberOf)
+    public static function gigabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'GiB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Binary
-     */
-    public static function terabytes($numberOf)
+    public static function terabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'TiB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Binary
-     */
-    public static function petabytes($numberOf)
+    public static function petabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'PiB'));
     }
 
-    /**
-     * @param int $numberOf
-     *
-     * @return Binary
-     */
-    public static function exabytes($numberOf)
+    public static function exabytes(int|float|string $numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'EiB'));
     }
 
-    /**
-     * @param int $numberOfBytes
-     *
-     * @return Binary
-     */
-    public function __construct($numberOfBytes, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
+    public function __construct(int|float|string $numberOfBytes, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
     {
         parent::__construct($numberOfBytes, new Formatter(self::scale(), $formatWithPrecision));
     }
 
-    /**
-     * @return PowerScale
-     */
-    public static function scale()
+    public static function scale(): PowerScale
     {
         return self::$scale = self::$scale ?: new PowerScale(self::BASE, self::SUFFIXES, self::COMPUTE_WITH_PRECISION);
     }

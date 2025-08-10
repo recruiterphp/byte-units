@@ -18,7 +18,7 @@ abstract class System
         return static::parser()->parse($bytesAsString);
     }
 
-    public function __construct(int|string $numberOfBytes, protected $formatter)
+    public function __construct(int|string $numberOfBytes, protected Formatter $formatter)
     {
         $this->numberOfBytes = $this->ensureIsNotNegative($this->normalize($numberOfBytes));
     }
@@ -110,13 +110,7 @@ abstract class System
         );
     }
 
-    /**
-     * @param string $howToFormat
-     * @param string $separator
-     *
-     * @return string
-     */
-    public function format($howToFormat = null, $separator = '')
+    public function format(int|string|null $howToFormat = null, string $separator = ''): string
     {
         return $this->formatter->format($this->numberOfBytes, $howToFormat, $separator);
     }
