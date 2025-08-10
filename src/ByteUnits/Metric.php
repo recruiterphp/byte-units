@@ -15,7 +15,7 @@ class Metric extends System
         'kB' => 1,
         'B' => 0,
     ];
-    private const int BASE = 1000;
+    private const string BASE = '1000';
 
     private static ?PowerScale $scale = null;
     private static ?Parser $parser = null;

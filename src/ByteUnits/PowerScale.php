@@ -7,7 +7,7 @@ final readonly class PowerScale
     /**
      * @param array<string, int> $scale
      */
-    public function __construct(private int $base, private array $scale, private int $precision)
+    public function __construct(private string $base, private array $scale, private int $precision)
     {
     }
 
@@ -19,7 +19,7 @@ final readonly class PowerScale
 
         return bcdiv(
             $quantity,
-            bcpow($this->base, $this->scale[$unit], $this->precision),
+            bcpow($this->base, (string) $this->scale[$unit], $this->precision),
             $this->precision,
         );
     }
@@ -28,14 +28,14 @@ final readonly class PowerScale
     {
         return $quantity * bcpow(
             $this->base,
-            $this->scale[$unit],
+            (string) $this->scale[$unit],
             $this->precision,
         );
     }
 
     public function isKnownUnit(string $unitAsString): bool
     {
-        return preg_match(
+        return (bool) preg_match(
             '/^(?:' . implode('|', array_keys($this->scale)) . ')$/i',
             trim($unitAsString),
         );
@@ -59,7 +59,7 @@ final readonly class PowerScale
         }
         foreach ($this->scale as $unit => $_) {
             $scaled = $this->scaleToUnit($quantity, $unit);
-            if (bccomp($scaled, 1) >= 0) {
+            if (bccomp($scaled, '1') >= 0) {
                 return $unit;
             }
         }

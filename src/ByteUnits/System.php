@@ -88,12 +88,13 @@ abstract class System
 
     abstract public function asMetric(): Metric;
 
-    private function normalize(string $numberOfBytes): string
+    private function normalize(string|int|float $numberOfBytes): string
     {
+        $numberOfBytes = (string) $numberOfBytes;
         if (preg_match('/^(?P<coefficient>\d+(?:\.\d+))E\+(?P<exponent>\d+)$/', $numberOfBytes, $matches)) {
             $numberOfBytes = bcmul(
                 $matches['coefficient'],
-                bcpow($base = 10, $matches['exponent'], self::COMPUTE_WITH_PRECISION),
+                bcpow($base = '10', $matches['exponent'], self::COMPUTE_WITH_PRECISION),
             );
         }
 
@@ -105,7 +106,7 @@ abstract class System
      */
     private function ensureIsNotNegative(string $numberOfBytes): string
     {
-        if (bccomp($numberOfBytes, 0) < 0) {
+        if (bccomp($numberOfBytes, '0') < 0) {
             throw new NegativeBytesException();
         }
 

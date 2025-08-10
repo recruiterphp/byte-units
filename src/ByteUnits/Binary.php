@@ -15,7 +15,7 @@ class Binary extends System
         'KiB' => 1,
         'B' => 0,
     ];
-    private const int BASE = 1024;
+    private const string BASE = '1024';
 
     private static ?PowerScale $scale = null;
     private static ?Parser $parser = null;
