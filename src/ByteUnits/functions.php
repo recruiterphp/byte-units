@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByteUnits;
 
 function box(int|string|System $something): System
@@ -14,7 +16,7 @@ function box(int|string|System $something): System
     return $something;
 }
 
-function bytes(int|string $numberOf): Metric
+function bytes(int|float|string $numberOf): Metric
 {
     return new Metric($numberOf);
 }

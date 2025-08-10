@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByteUnits;
 
 abstract class System
@@ -8,7 +10,7 @@ abstract class System
     public const int COMPUTE_WITH_PRECISION = 10;
     protected string $numberOfBytes;
 
-    public static function bytes(int|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
+    public static function bytes(int|float|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
     {
         return new static($numberOf, $formatWithPrecision);
     }
@@ -18,7 +20,7 @@ abstract class System
         return static::parser()->parse($bytesAsString);
     }
 
-    public function __construct(int|string $numberOfBytes, protected Formatter $formatter)
+    public function __construct(int|float|string $numberOfBytes, protected Formatter $formatter)
     {
         $this->numberOfBytes = $this->ensureIsNotNegative($this->normalize($numberOfBytes));
     }

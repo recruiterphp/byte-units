@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ByteUnits;
 
 class Metric extends System
@@ -20,7 +22,7 @@ class Metric extends System
     private static ?PowerScale $scale = null;
     private static ?Parser $parser = null;
 
-    public function __construct($numberOfBytes, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
+    public function __construct(int|float|string $numberOfBytes, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
     {
         parent::__construct($numberOfBytes, new Formatter(self::scale(), $formatWithPrecision));
     }
