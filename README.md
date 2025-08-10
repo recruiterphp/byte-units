@@ -72,11 +72,12 @@ echo ByteUnits\bytes(1322000)->numberOfBytes(); // outputs 1322000
 
 ### Compare
 There are a few methods that could be used to compare bytes in various units and systems
+
 ```php
 <?php
 
 ByteUnits\Metric::kilobytes(1)->isLessThan(ByteUnits\Binary::kilobytes(1)); // it's true
-ByteUnits\Metric::kilobytes(1)->isEqualTo(ByteUnits\Binary::bytes(1000)); // it's true
+ByteUnits\Metric::kilobytes(1)->equals(ByteUnits\Binary::bytes(1000)); // it's true
 ByteUnits\Metric::kilobytes(1.3)->isGreaterThan(ByteUnits\Binary::kilobytes(1)); // it's true
 ```
 

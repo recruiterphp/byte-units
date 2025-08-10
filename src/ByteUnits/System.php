@@ -4,42 +4,37 @@ namespace ByteUnits;
 
 abstract class System
 {
-    const DEFAULT_FORMAT_PRECISION = 2;
-    const COMPUTE_WITH_PRECISION = 10;
+    protected const int DEFAULT_FORMAT_PRECISION = 2;
+    protected const int COMPUTE_WITH_PRECISION = 10;
 
     protected $formatter;
-    protected $numberOfBytes;
+    protected string|int $numberOfBytes;
 
-    /**
-     * @param int|string $numberOf
-     * @param int $formatWithPrecision
-     * @return System
-     */
-    public static function bytes($numberOf, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
+    public static function bytes(int|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
     {
         return new static($numberOf, $formatWithPrecision);
     }
 
-    /**
-     * @param string $bytesAsString
-     * @return System
-     */
-    public static function parse($bytesAsString)
+    public static function parse(string $bytesAsString): static
     {
         return static::parser()->parse($bytesAsString);
     }
 
+    /**
+     * @throws NegativeBytesException
+     */
     public function __construct($numberOfBytes, $formatter)
     {
-        $this->formatter = $formatter;
         $this->numberOfBytes = $this->ensureIsNotNegative($this->normalize($numberOfBytes));
+        $this->formatter = $formatter;
     }
 
     /**
-     * @param System $another
-     * @return System
+     * @throws ConversionException
+     * @throws NegativeBytesException
+     * @throws \Exception
      */
-    public function add($another)
+    public function add(mixed $another): static
     {
         return new static(
             bcadd($this->numberOfBytes, box($another)->numberOfBytes, self::COMPUTE_WITH_PRECISION),
@@ -48,10 +43,11 @@ abstract class System
     }
 
     /**
-     * @param System $another
-     * @return System
+     * @throws ConversionException
+     * @throws NegativeBytesException
+     * @throws \Exception
      */
-    public function remove($another)
+    public function remove(mixed $another): static
     {
         return new static(
             bcsub($this->numberOfBytes, box($another)->numberOfBytes, self::COMPUTE_WITH_PRECISION),
@@ -60,10 +56,22 @@ abstract class System
     }
 
     /**
-     * @param System $another
-     * @return bool
+     * @throws ConversionException
+     * @throws \Exception
      */
-    public function isEqualTo($another)
+    public function equals(System $another): bool
+    {
+        if ($this::class !== $another::class) {
+            return false;
+        }
+
+        return self::compare($this, $another) === 0;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function isEqualTo(mixed $another): bool
     {
         return self::compare($this, box($another)) === 0;
     }
@@ -71,8 +79,9 @@ abstract class System
     /**
      * @param System $another
      * @return bool
+     * @throws ConversionException
      */
-    public function isGreaterThanOrEqualTo($another)
+    public function isGreaterThanOrEqualTo(mixed $another): bool
     {
         return self::compare($this, box($another)) >= 0;
     }
@@ -81,7 +90,7 @@ abstract class System
      * @param System $another
      * @return bool
      */
-    public function isGreaterThan($another)
+    public function isGreaterThan(mixed $another)
     {
         return self::compare($this, box($another)) > 0;
     }
@@ -96,20 +105,14 @@ abstract class System
     }
 
     /**
-     * @param System $another
-     * @return bool
+     * @throws \Exception
      */
-    public function isLessThan($another)
+    public function isLessThan(mixed $another): bool
     {
         return self::compare($this, box($another)) < 0;
     }
 
-    /**
-     * @param System $left
-     * @param System $right
-     * @return int
-     */
-    public static function compare($left, $right)
+    public static function compare(System $left, System $right): int
     {
         return bccomp(
             $left->numberOfBytes,
@@ -128,10 +131,7 @@ abstract class System
         return $this->formatter->format($this->numberOfBytes, $howToFormat, $separator);
     }
 
-    /**
-     * @return System
-     */
-    public function asBinary()
+    public function asBinary(): Binary
     {
         return Binary::bytes($this->numberOfBytes);
     }
@@ -144,11 +144,7 @@ abstract class System
         return Metric::bytes($this->numberOfBytes);
     }
 
-    /**
-     * @param string $numberOfBytes
-     * @return int
-     */
-    private function normalize($numberOfBytes)
+    private function normalize(string $numberOfBytes): string
     {
         $numberOfBytes = (string) $numberOfBytes;
         if (preg_match('/^(?P<coefficient>\d+(?:\.\d+))E\+(?P<exponent>\d+)$/', $numberOfBytes, $matches)) {
@@ -161,11 +157,9 @@ abstract class System
     }
 
     /**
-     * @param int|string $numberOfBytes
-     * @return int|string
      * @throws NegativeBytesException
      */
-    private function ensureIsNotNegative($numberOfBytes)
+    private function ensureIsNotNegative(int|string $numberOfBytes): int|string
     {
         if (bccomp($numberOfBytes, 0) < 0) {
             throw new NegativeBytesException();
@@ -173,10 +167,7 @@ abstract class System
         return $numberOfBytes;
     }
 
-    /**
-     * @return int|string
-     */
-    public function numberOfBytes()
+    public function numberOfBytes(): int|string
     {
         return $this->numberOfBytes;
     }

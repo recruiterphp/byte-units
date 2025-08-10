@@ -2,7 +2,9 @@
 
 namespace ByteUnits;
 
-class ConversionBetweenSystemsTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ConversionBetweenSystemsTest extends TestCase
 {
     public function testBytesAreInMetricStystem()
     {

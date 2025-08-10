@@ -4,8 +4,8 @@ namespace ByteUnits;
 
 class Metric extends System
 {
-    private static $base = 1000;
-    private static $suffixes = ['YB'=>8, 'ZB'=>7, 'EB'=>6, 'PB'=>5, 'TB'=>4, 'GB'=>3, 'MB'=>2, 'kB'=>1, 'B'=>0];
+    private static int $base = 1000;
+    private static array $suffixes = ['YB'=>8, 'ZB'=>7, 'EB'=>6, 'PB'=>5, 'TB'=>4, 'GB'=>3, 'MB'=>2, 'kB'=>1, 'B'=>0];
     private static $scale;
     private static $parser;
 
@@ -68,18 +68,12 @@ class Metric extends System
         return new self(self::scale()->scaleFromUnit($numberOf, 'EB'));
     }
 
-    /**
-     * @return PowerScale
-     */
-    public static function scale()
+    public static function scale(): PowerScale
     {
         return self::$scale = self::$scale ?: new PowerScale(self::$base, self::$suffixes, self::COMPUTE_WITH_PRECISION);
     }
 
-    /**
-     * @return Parser
-     */
-    public static function parser()
+    public static function parser(): Parser
     {
         return self::$parser = self::$parser ?: new Parser(self::scale(), __CLASS__);
     }

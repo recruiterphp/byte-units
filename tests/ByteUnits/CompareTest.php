@@ -2,7 +2,9 @@
 
 namespace ByteUnits;
 
-class CompareTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CompareTest extends TestCase
 {
     public function testCompareWithSameUnitSystem()
     {

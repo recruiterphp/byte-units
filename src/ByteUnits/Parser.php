@@ -7,9 +7,14 @@ use ReflectionClass;
 class Parser
 {
     private $scale;
-    private $system;
+    private readonly ReflectionClass $system;
 
-    public function __construct($scale, $system)
+    /**
+     * @param $scale
+     * @param class-string $system
+     * @throws \ReflectionException
+     */
+    public function __construct($scale, string $system)
     {
         $this->scale = $scale;
         $this->system = new ReflectionClass($system);
@@ -19,8 +24,9 @@ class Parser
      * @param string $quantityWithUnit
      * @return System
      * @throws ParseException
+     * @throws \ReflectionException
      */
-    public function parse($quantityWithUnit)
+    public function parse(string $quantityWithUnit): System
     {
         if (preg_match('/(?P<quantity>[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\W*(?P<unit>.*)/', $quantityWithUnit, $matches)) {
             $quantity = $matches['quantity'];

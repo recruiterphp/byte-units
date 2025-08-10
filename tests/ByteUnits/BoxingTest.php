@@ -2,7 +2,9 @@
 
 namespace ByteUnits;
 
-class BoxingTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class BoxingTest extends TestCase
 {
     public function testBoxAnInteger()
     {
@@ -23,10 +25,11 @@ class BoxingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException ByteUnits\ConversionException
+     * @throws \Exception
      */
     public function testBoxAnObjectThatIsNotAByteUnit()
     {
+        $this->expectException(ConversionException::class);
         box(new \StdClass());
     }
 }
