@@ -10,23 +10,12 @@ abstract class System
     protected $formatter;
     protected string $numberOfBytes;
 
-    /**
-     * @param int|string $numberOf
-     * @param int        $formatWithPrecision
-     *
-     * @return System
-     */
-    public static function bytes($numberOf, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
+    public static function bytes(int|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
     {
         return new static($numberOf, $formatWithPrecision);
     }
 
-    /**
-     * @param string $bytesAsString
-     *
-     * @return System
-     */
-    public static function parse($bytesAsString)
+    public static function parse(string $bytesAsString)
     {
         return static::parser()->parse($bytesAsString);
     }
@@ -37,12 +26,7 @@ abstract class System
         $this->numberOfBytes = $this->ensureIsNotNegative($this->normalize($numberOfBytes));
     }
 
-    /**
-     * @param System $another
-     *
-     * @return System
-     */
-    public function add($another)
+    public function add(int|string|System $another): static
     {
         return new static(
             bcadd($this->numberOfBytes, box($another)->numberOfBytes, self::COMPUTE_WITH_PRECISION),
@@ -50,12 +34,7 @@ abstract class System
         );
     }
 
-    /**
-     * @param System $another
-     *
-     * @return System
-     */
-    public function remove($another)
+    public function remove(int|string|System $another): static
     {
         return new static(
             bcsub($this->numberOfBytes, box($another)->numberOfBytes, self::COMPUTE_WITH_PRECISION),
@@ -71,6 +50,12 @@ abstract class System
     public function isEqualTo($another)
     {
         return 0 === self::compare($this, box($another));
+    }
+
+    public function equals(System $other): bool
+    {
+        return $this::class === $other::class
+            && $this->isEqualTo($other);
     }
 
     /**
@@ -139,21 +124,9 @@ abstract class System
         return $this->formatter->format($this->numberOfBytes, $howToFormat, $separator);
     }
 
-    /**
-     * @return System
-     */
-    public function asBinary()
-    {
-        return Binary::bytes($this->numberOfBytes);
-    }
+    abstract public function asBinary(): Binary;
 
-    /**
-     * @return System
-     */
-    public function asMetric()
-    {
-        return Metric::bytes($this->numberOfBytes);
-    }
+    abstract public function asMetric(): Metric;
 
     /**
      * @param string $numberOfBytes

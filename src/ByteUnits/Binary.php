@@ -94,4 +94,14 @@ class Binary extends System
     {
         return self::$parser = self::$parser ?: new Parser(self::scale(), __CLASS__);
     }
+
+    public function asBinary(): Binary
+    {
+        return $this;
+    }
+
+    public function asMetric(): Metric
+    {
+        return Metric::bytes($this->numberOfBytes);
+    }
 }
