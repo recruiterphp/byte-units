@@ -4,7 +4,7 @@ namespace ByteUnits;
 
 function box(int|string|System $something): System
 {
-    if (is_integer($something)) {
+    if (is_int($something)) {
         return bytes($something);
     }
     if (is_string($something)) {

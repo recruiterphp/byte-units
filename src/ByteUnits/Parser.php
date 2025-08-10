@@ -4,12 +4,10 @@ namespace ByteUnits;
 
 class Parser
 {
-    private $scale;
     private $system;
 
-    public function __construct($scale, $system)
+    public function __construct(private $scale, $system)
     {
-        $this->scale = $scale;
         $this->system = new \ReflectionClass($system);
     }
 

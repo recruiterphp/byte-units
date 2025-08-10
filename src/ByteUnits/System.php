@@ -6,8 +6,6 @@ abstract class System
 {
     public const DEFAULT_FORMAT_PRECISION = 2;
     public const COMPUTE_WITH_PRECISION = 10;
-
-    protected $formatter;
     protected string $numberOfBytes;
 
     public static function bytes(int|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
@@ -20,9 +18,8 @@ abstract class System
         return static::parser()->parse($bytesAsString);
     }
 
-    public function __construct(int|string $numberOfBytes, $formatter)
+    public function __construct(int|string $numberOfBytes, protected $formatter)
     {
-        $this->formatter = $formatter;
         $this->numberOfBytes = $this->ensureIsNotNegative($this->normalize($numberOfBytes));
     }
 
@@ -54,7 +51,7 @@ abstract class System
 
     public function equals(System $other): bool
     {
-        return $this::class === $other::class
+        return static::class === $other::class
             && $this->isEqualTo($other);
     }
 

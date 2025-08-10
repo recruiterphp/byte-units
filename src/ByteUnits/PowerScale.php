@@ -4,15 +4,8 @@ namespace ByteUnits;
 
 class PowerScale
 {
-    private $base;
-    private $scale;
-    private $precision;
-
-    public function __construct($base, $scale, $precision)
+    public function __construct(private $base, private $scale, private $precision)
     {
-        $this->base = $base;
-        $this->scale = $scale;
-        $this->precision = $precision;
     }
 
     public function scaleToUnit($quantity, $unit)

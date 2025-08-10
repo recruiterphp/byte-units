@@ -8,16 +8,16 @@ class ConversionBetweenSystemsTest extends TestCase
 {
     public function testBytesAreInMetricStystem()
     {
-        $this->assertInstanceOf('ByteUnits\Metric', bytes(1));
+        $this->assertInstanceOf(Metric::class, bytes(1));
     }
 
     public function testConvertFromMetricToBinarySystem()
     {
-        $this->assertInstanceOf('ByteUnits\Binary', Metric::bytes(1)->asBinary());
+        $this->assertInstanceOf(Binary::class, Metric::bytes(1)->asBinary());
     }
 
     public function testConvertFromBinaryToMetricSystem()
     {
-        $this->assertInstanceOf('ByteUnits\Metric', Binary::bytes(1)->asMetric());
+        $this->assertInstanceOf(Metric::class, Binary::bytes(1)->asMetric());
     }
 }

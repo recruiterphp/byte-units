@@ -4,13 +4,8 @@ namespace ByteUnits;
 
 class Formatter
 {
-    private $converter;
-    private $precision;
-
-    public function __construct($converter, $precision)
+    public function __construct(private $converter, private $precision)
     {
-        $this->converter = $converter;
-        $this->precision = $precision;
     }
 
     public function precision()
@@ -28,7 +23,7 @@ class Formatter
 
     private function precisionFrom($howToFormat)
     {
-        if (is_integer($howToFormat)) {
+        if (is_int($howToFormat)) {
             return $howToFormat;
         }
         if (is_string($howToFormat)) {

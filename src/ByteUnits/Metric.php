@@ -87,7 +87,7 @@ class Metric extends System
      */
     public static function parser()
     {
-        return self::$parser = self::$parser ?: new Parser(self::scale(), __CLASS__);
+        return self::$parser = self::$parser ?: new Parser(self::scale(), self::class);
     }
 
     public function asBinary(): Binary
