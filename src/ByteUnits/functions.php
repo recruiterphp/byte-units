@@ -2,7 +2,7 @@
 
 namespace ByteUnits;
 
-function box($something)
+function box(int|string|System $something): System
 {
     if (is_integer($something)) {
         return bytes($something);
@@ -10,31 +10,28 @@ function box($something)
     if (is_string($something)) {
         return parse($something);
     }
-    if (is_object($something) && ($something instanceof System)) {
-        return $something;
-    }
-    throw new ConversionException();
+
+    return $something;
 }
 
-function bytes($numberOf)
+function bytes(int|string $numberOf): Metric
 {
     return new Metric($numberOf);
 }
 
 /**
- * @return System
- *
- * @throws \Exception
+ * @throws ParseException
  */
-function parse($bytesAsString)
+function parse(string $bytesAsString): System
 {
     $lastParseException = null;
     $parsers = [Metric::parser(), Binary::parser()];
     foreach ($parsers as $parser) {
         try {
             return $parser->parse($bytesAsString);
+        } catch (ParseException $lastParseException) {
         } catch (\Exception $e) {
-            $lastParseException = $e;
+            $lastParseException = new ParseException($e->getMessage(), $e->getCode(), $e);
         }
     }
     throw $lastParseException;
