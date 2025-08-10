@@ -46,7 +46,7 @@ class Formatter
     private function byteUnitToFormatTo($numberOfBytes, $howToFormat)
     {
         if (is_string($howToFormat)) {
-            if (preg_match('/^(?P<unit>[^\\/]+)(?:\\/.*$)?/i', $howToFormat, $matches)) {
+            if (preg_match('/^(?P<unit>[^\/]+)(?:\/.*$)?/i', $howToFormat, $matches)) {
                 if ($this->converter->isKnownUnit($matches['unit'])) {
                     return $this->converter->normalizeNameOfUnit($matches['unit']);
                 }
