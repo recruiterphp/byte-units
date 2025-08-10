@@ -4,8 +4,8 @@ namespace ByteUnits;
 
 abstract class System
 {
-    public const DEFAULT_FORMAT_PRECISION = 2;
-    public const COMPUTE_WITH_PRECISION = 10;
+    public const int DEFAULT_FORMAT_PRECISION = 2;
+    public const int COMPUTE_WITH_PRECISION = 10;
     protected string $numberOfBytes;
 
     public static function bytes(int|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
@@ -39,12 +39,7 @@ abstract class System
         );
     }
 
-    /**
-     * @param System $another
-     *
-     * @return bool
-     */
-    public function isEqualTo($another)
+    public function isEqualTo(int|string|System $another): bool
     {
         return 0 === self::compare($this, box($another));
     }
@@ -55,53 +50,27 @@ abstract class System
             && $this->isEqualTo($other);
     }
 
-    /**
-     * @param System $another
-     *
-     * @return bool
-     */
-    public function isGreaterThanOrEqualTo($another)
+    public function isGreaterThanOrEqualTo(int|string|System $another): bool
     {
         return self::compare($this, box($another)) >= 0;
     }
 
-    /**
-     * @param System $another
-     *
-     * @return bool
-     */
-    public function isGreaterThan($another)
+    public function isGreaterThan(int|string|System $another): bool
     {
         return self::compare($this, box($another)) > 0;
     }
 
-    /**
-     * @param System $another
-     *
-     * @return bool
-     */
-    public function isLessThanOrEqualTo($another)
+    public function isLessThanOrEqualTo(int|string|System $another): bool
     {
         return self::compare($this, box($another)) <= 0;
     }
 
-    /**
-     * @param System $another
-     *
-     * @return bool
-     */
-    public function isLessThan($another)
+    public function isLessThan(int|string|System $another): bool
     {
         return self::compare($this, box($another)) < 0;
     }
 
-    /**
-     * @param System $left
-     * @param System $right
-     *
-     * @return int
-     */
-    public static function compare($left, $right)
+    public static function compare(System $left, System $right): int
     {
         return bccomp(
             $left->numberOfBytes,
@@ -119,14 +88,8 @@ abstract class System
 
     abstract public function asMetric(): Metric;
 
-    /**
-     * @param string $numberOfBytes
-     *
-     * @return int
-     */
-    private function normalize($numberOfBytes)
+    private function normalize(string $numberOfBytes): string
     {
-        $numberOfBytes = (string) $numberOfBytes;
         if (preg_match('/^(?P<coefficient>\d+(?:\.\d+))E\+(?P<exponent>\d+)$/', $numberOfBytes, $matches)) {
             $numberOfBytes = bcmul(
                 $matches['coefficient'],
@@ -140,13 +103,13 @@ abstract class System
     /**
      * @throws NegativeBytesException
      */
-    private function ensureIsNotNegative(int|string $numberOfBytes): string
+    private function ensureIsNotNegative(string $numberOfBytes): string
     {
         if (bccomp($numberOfBytes, 0) < 0) {
             throw new NegativeBytesException();
         }
 
-        return (string) $numberOfBytes;
+        return $numberOfBytes;
     }
 
     public function numberOfBytes(): string
