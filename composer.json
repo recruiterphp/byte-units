@@ -28,9 +28,9 @@
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.47",
+        "friendsofphp/php-cs-fixer": "^3.85",
         "phpunit/phpunit": "^12.3",
         "rector/rector": "^2.1",
-        "friendsofphp/php-cs-fixer": "^3.85",
         "symfony/var-dumper": "^7.3",
         "vimeo/psalm": "^6.13"
     },
@@ -53,6 +53,7 @@
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true
-        }
+        },
+        "sort-packages": true
     }
 }
