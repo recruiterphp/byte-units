@@ -2,7 +2,9 @@
 
 namespace ByteUnits;
 
-class BinarySystemTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class BinarySystemTest extends TestCase
 {
     public function testKilobytesConstructor()
     {
@@ -34,11 +36,9 @@ class BinarySystemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Binary::bytes(1152921504606846976), Binary::exabytes(1));
     }
 
-    /**
-     * @expectedException ByteUnits\NegativeBytesException
-     */
     public function testCannotBeNegative()
     {
+        $this->expectException(NegativeBytesException::class);
         Binary::bytes(-1);
     }
 }

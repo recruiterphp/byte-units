@@ -2,7 +2,9 @@
 
 namespace ByteUnits;
 
-class MetricSystemTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class MetricSystemTest extends TestCase
 {
     public function testKilobytesConstructor()
     {
@@ -34,11 +36,9 @@ class MetricSystemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Metric::bytes(1000000000000000000), Metric::exabytes(1));
     }
 
-    /**
-     * @expectedException ByteUnits\NegativeBytesException
-     */
     public function testCannotBeNegative()
     {
+        $this->expectException(NegativeBytesException::class);
         Metric::bytes(-1);
     }
 }

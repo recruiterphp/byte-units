@@ -2,7 +2,9 @@
 
 namespace ByteUnits;
 
-class FormatInBinarySystemTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class FormatInBinarySystemTest extends TestCase
 {
     public function testBytesNamedConstructor()
     {

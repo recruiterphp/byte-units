@@ -2,7 +2,9 @@
 
 namespace ByteUnits;
 
-class FormatInMetricSystemTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class FormatInMetricSystemTest extends TestCase
 {
     public function testBytesNamedConstructor()
     {
