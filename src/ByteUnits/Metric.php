@@ -89,4 +89,14 @@ class Metric extends System
     {
         return self::$parser = self::$parser ?: new Parser(self::scale(), __CLASS__);
     }
+
+    public function asBinary(): Binary
+    {
+        return Binary::bytes($this->numberOfBytes);
+    }
+
+    public function asMetric(): Metric
+    {
+        return $this;
+    }
 }
