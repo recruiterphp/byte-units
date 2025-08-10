@@ -36,6 +36,11 @@ class MetricSystemTest extends TestCase
         $this->assertEquals(Metric::bytes(1000000000000000000), Metric::exabytes(1));
     }
 
+    public function testExabytesConstructorWithDecimal(): void
+    {
+        $this->assertEquals(Metric::bytes(1500000000000000000), Metric::exabytes(1.5));
+    }
+
     public function testCannotBeNegative()
     {
         $this->expectException(NegativeBytesException::class);

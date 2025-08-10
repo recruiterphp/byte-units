@@ -24,12 +24,16 @@ final readonly class PowerScale
         );
     }
 
-    public function scaleFromUnit(int|float|string $quantity, string $unit): float|int
+    public function scaleFromUnit(int|float|string $quantity, string $unit): string
     {
-        return $quantity * bcpow(
-            $this->base,
-            (string) $this->scale[$unit],
-            $this->precision,
+        return bcmul(
+            (string) $quantity,
+            bcpow(
+                $this->base,
+                (string) $this->scale[$unit],
+                $this->precision,
+            ),
+            0,
         );
     }
 
