@@ -20,38 +20,63 @@ final class Metric extends System
     private const string BASE = '1000';
 
     private static ?PowerScale $scale = null;
+
+    /**
+     * @var ?Parser<self>
+     */
     private static ?Parser $parser = null;
 
+    /**
+     * @param float|int|numeric-string $numberOf
+     */
     public static function bytes(float|int|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
     {
         return new self($numberOf, new Formatter(self::scale(), $formatWithPrecision));
     }
 
+    /**
+     * @param float|int|numeric-string $numberOf
+     */
     public static function kilobytes(int|float|string $numberOf): self
     {
         return self::bytes(self::scale()->scaleFromUnit($numberOf, 'kB'));
     }
 
+    /**
+     * @param float|int|numeric-string $numberOf
+     */
     public static function megabytes(int|float|string $numberOf): self
     {
         return self::bytes(self::scale()->scaleFromUnit($numberOf, 'MB'));
     }
 
+    /**
+     * @param float|int|numeric-string $numberOf
+     */
     public static function gigabytes(int|float|string $numberOf): self
     {
         return self::bytes(self::scale()->scaleFromUnit($numberOf, 'GB'));
     }
 
+    /**
+     * @param float|int|numeric-string $numberOf
+     */
     public static function terabytes(int|float|string $numberOf): self
     {
         return self::bytes(self::scale()->scaleFromUnit($numberOf, 'TB'));
     }
 
+    /**
+     * @param float|int|numeric-string $numberOf
+     */
     public static function petabytes(int|float|string $numberOf): self
     {
         return self::bytes(self::scale()->scaleFromUnit($numberOf, 'PB'));
     }
 
+    /**
+     * @param float|int|numeric-string $numberOf
+     */
     public static function exabytes(int|float|string $numberOf): self
     {
         return self::bytes(self::scale()->scaleFromUnit($numberOf, 'EB'));

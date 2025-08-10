@@ -16,6 +16,9 @@ function box(int|string|System $something): System
     return $something;
 }
 
+/**
+ * @param float|int|numeric-string $numberOf
+ */
 function bytes(int|float|string $numberOf): Metric
 {
     return Metric::bytes($numberOf);

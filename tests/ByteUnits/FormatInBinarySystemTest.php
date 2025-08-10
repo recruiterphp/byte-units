@@ -8,12 +8,12 @@ use PHPUnit\Framework\TestCase;
 
 class FormatInBinarySystemTest extends TestCase
 {
-    public function testBytesNamedConstructor()
+    public function testBytesNamedConstructor(): void
     {
         $this->assertEquals('1', Binary::bytes(1)->numberOfBytes());
     }
 
-    public function testFormatInMostReadableByteUnit()
+    public function testFormatInMostReadableByteUnit(): void
     {
         $this->assertEquals('0B', Binary::bytes(0)->format());
         $this->assertEquals('1B', Binary::bytes(1)->format());
@@ -24,20 +24,20 @@ class FormatInBinarySystemTest extends TestCase
         $this->assertEquals('2.00TiB', Binary::bytes(2199023255552)->format());
     }
 
-    public function testFormatInMostReadableByteUnitWithPrecision()
+    public function testFormatInMostReadableByteUnitWithPrecision(): void
     {
         $this->assertEquals('1.201216MiB', Binary::bytes(1259566)->format(6));
         $this->assertEquals('1.201216MiB', Binary::bytes(1259566)->format('/000000'));
         $this->assertEquals('1.201216MiB', Binary::bytes(1259566)->format('/6'));
     }
 
-    public function testFormatInMostReadableByteUnitWithSepartor()
+    public function testFormatInMostReadableByteUnitWithSepartor(): void
     {
         $this->assertEquals('1.20 MiB', Binary::bytes(1259566)->format(2, ' '));
         $this->assertEquals('1.20/MiB', Binary::bytes(1259566)->format(2, '/'));
     }
 
-    public function testFormatInByteUnit()
+    public function testFormatInByteUnit(): void
     {
         $bytes = Binary::bytes(1250000000);
         $this->assertEquals('1250000000B', $bytes->format('B'));
@@ -46,7 +46,7 @@ class FormatInBinarySystemTest extends TestCase
         $this->assertEquals('1.16GiB', $bytes->format('GiB'));
     }
 
-    public function testFormatInByteUnitIsCaseInsensitive()
+    public function testFormatInByteUnitIsCaseInsensitive(): void
     {
         $bytes = Binary::bytes(1250000000);
         $this->assertEquals('1250000000B', $bytes->format('B'));
@@ -58,7 +58,7 @@ class FormatInBinarySystemTest extends TestCase
         $this->assertEquals('1220703.12KiB', $bytes->format('kib'));
     }
 
-    public function testFormatInByteUnitWithPrecision()
+    public function testFormatInByteUnitWithPrecision(): void
     {
         $bytes = Binary::bytes(1250000000);
         $this->assertEquals('1.164153GiB', $bytes->format('GiB/000000'));
@@ -67,7 +67,7 @@ class FormatInBinarySystemTest extends TestCase
         $this->assertEquals('0.001137TiB', $bytes->format('TiB/6'));
     }
 
-    public function testNumberOfBytes()
+    public function testNumberOfBytes(): void
     {
         $this->assertEquals('0', Binary::bytes(0)->numberOfBytes());
         $this->assertEquals('1', Binary::bytes(1)->numberOfBytes());

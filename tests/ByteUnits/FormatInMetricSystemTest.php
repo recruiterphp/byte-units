@@ -8,12 +8,12 @@ use PHPUnit\Framework\TestCase;
 
 class FormatInMetricSystemTest extends TestCase
 {
-    public function testBytesNamedConstructor()
+    public function testBytesNamedConstructor(): void
     {
         $this->assertEquals('1', Metric::bytes(1)->numberOfBytes());
     }
 
-    public function testFormatInMostReadableByteUnit()
+    public function testFormatInMostReadableByteUnit(): void
     {
         $this->assertEquals('0B', Metric::bytes(0)->format());
         $this->assertEquals('1B', Metric::bytes(1)->format());
@@ -28,20 +28,20 @@ class FormatInMetricSystemTest extends TestCase
         $this->assertEquals('3.00YB', Metric::bytes(3000000000000000000000000)->format());
     }
 
-    public function testFormatInMostReadableByteUnitWithPrecision()
+    public function testFormatInMostReadableByteUnitWithPrecision(): void
     {
         $this->assertEquals('1.259566MB', Metric::bytes(1259566)->format(6));
         $this->assertEquals('1.259566MB', Metric::bytes(1259566)->format('/000000'));
         $this->assertEquals('1.259566MB', Metric::bytes(1259566)->format('/6'));
     }
 
-    public function testFormatInMostReadableByteUnitWithSepartor()
+    public function testFormatInMostReadableByteUnitWithSepartor(): void
     {
         $this->assertEquals('1.26 MB', Metric::bytes(1259566)->format(2, ' '));
         $this->assertEquals('1.26/MB', Metric::bytes(1259566)->format(2, '/'));
     }
 
-    public function testFormatInByteUnit()
+    public function testFormatInByteUnit(): void
     {
         $bytes = Metric::bytes(1250000000);
         $this->assertEquals('1250000000B', $bytes->format('B'));
@@ -50,7 +50,7 @@ class FormatInMetricSystemTest extends TestCase
         $this->assertEquals('1.25GB', $bytes->format('GB'));
     }
 
-    public function testFormatInByteUnitIsCaseInsensitive()
+    public function testFormatInByteUnitIsCaseInsensitive(): void
     {
         $bytes = Metric::bytes(1250000000);
         $this->assertEquals('1250000000B', $bytes->format('b'));
@@ -66,14 +66,14 @@ class FormatInMetricSystemTest extends TestCase
         $this->assertEquals('1.25GB', $bytes->format('gb'));
     }
 
-    public function testFormatInByteUnitWithPrecision()
+    public function testFormatInByteUnitWithPrecision(): void
     {
         $this->assertEquals('1.250000GB', Metric::bytes(1250000000)->format('GB/000000'));
         $this->assertEquals('0.001250GB', Metric::bytes(1250000)->format('GB/000000'));
         $this->assertEquals('0.000001GB', Metric::bytes(1250)->format('GB/000000'));
     }
 
-    public function testFormatWithRoundPrecision()
+    public function testFormatWithRoundPrecision(): void
     {
         $this->assertEquals('1MB', Metric::bytes(1259566)->format(0));
         $this->assertEquals('1MB', Metric::bytes(1259566)->format('MB/'));

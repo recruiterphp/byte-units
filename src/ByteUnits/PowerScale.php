@@ -7,12 +7,18 @@ namespace ByteUnits;
 final readonly class PowerScale
 {
     /**
+     * @param numeric-string     $base
      * @param array<string, int> $scale
      */
     public function __construct(private string $base, private array $scale, private int $precision)
     {
     }
 
+    /**
+     * @param numeric-string $quantity
+     *
+     * @return numeric-string
+     */
     public function scaleToUnit(string $quantity, ?string $unit): string
     {
         if ('0' === $quantity) {
@@ -26,6 +32,11 @@ final readonly class PowerScale
         );
     }
 
+    /**
+     * @param int|float|numeric-string $quantity
+     *
+     * @return numeric-string
+     */
     public function scaleFromUnit(int|float|string $quantity, string $unit): string
     {
         return bcmul(
@@ -58,11 +69,15 @@ final readonly class PowerScale
         return $unitAsString;
     }
 
-    public function normalUnitFor($quantity): ?string
+    /**
+     * @param numeric-string $quantity
+     */
+    public function normalUnitFor(string $quantity): ?string
     {
-        if (0 === $quantity) {
+        if ('0' === $quantity) {
             return 'B';
         }
+
         foreach ($this->scale as $unit => $_) {
             $scaled = $this->scaleToUnit($quantity, $unit);
             if (bccomp($scaled, '1') >= 0) {

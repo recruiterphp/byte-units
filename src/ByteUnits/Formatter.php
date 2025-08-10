@@ -15,6 +15,9 @@ readonly class Formatter
         return $this->precision;
     }
 
+    /**
+     * @param numeric-string $numberOfBytes
+     */
     public function format(string $numberOfBytes, int|string|null $howToFormat, string $separator): string
     {
         $precision = $this->precisionFrom($howToFormat);
@@ -40,7 +43,10 @@ readonly class Formatter
         return $this->precision;
     }
 
-    private function byteUnitToFormatTo($numberOfBytes, int|string|null $howToFormat): ?string
+    /**
+     * @param numeric-string $numberOfBytes
+     */
+    private function byteUnitToFormatTo(string $numberOfBytes, int|string|null $howToFormat): ?string
     {
         if (is_string($howToFormat)) {
             if (preg_match('/^(?P<unit>[^\/]+)(?:\/.*$)?/i', $howToFormat, $matches)) {
@@ -53,7 +59,10 @@ readonly class Formatter
         return $this->converter->normalUnitFor($numberOfBytes);
     }
 
-    private function formatInByteUnit($numberOfBytes, $byteUnit, int $precision, string $separator): string
+    /**
+     * @param numeric-string $numberOfBytes
+     */
+    private function formatInByteUnit(string $numberOfBytes, ?string $byteUnit, int $precision, string $separator): string
     {
         $scaled = $this->converter->scaleToUnit($numberOfBytes, $byteUnit);
         if (null == $byteUnit) {

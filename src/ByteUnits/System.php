@@ -8,7 +8,10 @@ abstract class System
 {
     public const int DEFAULT_FORMAT_PRECISION = 2;
     public const int COMPUTE_WITH_PRECISION = 10;
-    protected string $numberOfBytes;
+    /**
+     * @var numeric-string
+     */
+    protected readonly string $numberOfBytes;
 
     /**
      * @return Parser<static>
@@ -22,6 +25,9 @@ abstract class System
         return static::parser()->parse($bytesAsString);
     }
 
+    /**
+     * @param int|float|numeric-string $numberOfBytes
+     */
     final protected function __construct(int|float|string $numberOfBytes, protected Formatter $formatter)
     {
         $this->numberOfBytes = $this->ensureIsNotNegative($this->normalize($numberOfBytes));
@@ -92,11 +98,17 @@ abstract class System
 
     abstract public function asMetric(): Metric;
 
+    /**
+     * @param numeric-string|int|float $numberOfBytes
+     *
+     * @return numeric-string
+     */
     private function normalize(string|int|float $numberOfBytes): string
     {
         $numberOfBytes = (string) $numberOfBytes;
         if (preg_match('/^(?P<coefficient>\d+(?:\.\d+))E\+(?P<exponent>\d+)$/', $numberOfBytes, $matches)) {
             $numberOfBytes = bcmul(
+                /** @phpstan-ignore-next-line */
                 $matches['coefficient'],
                 bcpow($base = '10', $matches['exponent'], self::COMPUTE_WITH_PRECISION),
             );
@@ -106,6 +118,10 @@ abstract class System
     }
 
     /**
+     * @param numeric-string $numberOfBytes
+     *
+     * @return numeric-string
+     *
      * @throws NegativeBytesException
      */
     private function ensureIsNotNegative(string $numberOfBytes): string

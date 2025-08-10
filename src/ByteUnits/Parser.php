@@ -10,7 +10,7 @@ namespace ByteUnits;
 readonly class Parser
 {
     /**
-     * @param \Closure(int|float|string): T $closure
+     * @param \Closure(float|int|numeric-string, int=): T $closure
      */
     public function __construct(private PowerScale $scale, private \Closure $closure)
     {
@@ -28,9 +28,11 @@ readonly class Parser
             if ($this->scale->isKnownUnit($matches['unit'])) {
                 $unit = $this->scale->normalizeNameOfUnit($matches['unit']);
 
+                /** @phpstan-ignore-next-line */
                 return ($this->closure)($this->scale->scaleFromUnit($quantity, $unit));
             }
             if (empty($matches['unit'])) {
+                /** @phpstan-ignore-next-line */
                 return ($this->closure)($quantity);
             }
         }

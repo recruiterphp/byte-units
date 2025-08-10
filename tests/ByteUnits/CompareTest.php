@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class CompareTest extends TestCase
 {
-    public function testCompareWithSameUnitSystem()
+    public function testCompareWithSameUnitSystem(): void
     {
         $this->assertTrue(Metric::bytes(1)->isEqualTo(Metric::bytes(1)));
         $this->assertTrue(Metric::bytes(1)->isGreaterThanOrEqualTo(Metric::bytes(1)));
@@ -23,7 +23,7 @@ class CompareTest extends TestCase
         $this->assertTrue(Binary::bytes(1)->isLessThan(Binary::bytes(5)));
     }
 
-    public function testCompareWithOtherUnitSystem()
+    public function testCompareWithOtherUnitSystem(): void
     {
         $this->assertTrue(Metric::bytes(1)->isEqualTo(Binary::bytes(1)));
         $this->assertTrue(Metric::bytes(1)->isGreaterThanOrEqualTo(Binary::bytes(1)));
@@ -38,7 +38,7 @@ class CompareTest extends TestCase
         $this->assertTrue(Binary::bytes(1)->isLessThan(Metric::bytes(5)));
     }
 
-    public function testAutoboxing()
+    public function testAutoboxing(): void
     {
         $this->assertTrue(Metric::bytes(1)->isEqualTo(1));
         $this->assertTrue(Metric::bytes(1)->isEqualTo('1B'));
