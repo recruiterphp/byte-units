@@ -1,4 +1,5 @@
-## Byte Units [![Build Status](https://travis-ci.org/gabrielelana/byte-units.svg?branch=master)](https://travis-ci.org/gabrielelana/byte-units)
+[![CI Pipeline](https://github.com/recruiterphp/byte-units/actions/workflows/ci.yml/badge.svg)](https://github.com/recruiterphp/byte-units/actions/workflows/ci.yml)
+
 This is a utility component for parsing, formatting, converting and manipulating byte units in various formats.
 
 ## Usage
@@ -114,7 +115,7 @@ echo ByteUnits\Binary::kilobytes(1)->remove('1KiB')->format(); // outputs 24B
   ```json
   {
     "require": {
-      "gabrielelana/byte-units": "^0.5"
+      "recruiterphp/byte-units": "^0.6"
     }
   }
   ```
