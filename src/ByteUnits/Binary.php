@@ -31,7 +31,7 @@ class Binary extends System
      * @param int $numberOf
      * @return Binary
      */
-    public static function gigabytes(int $numberOf): Binary
+    public static function gigabytes($numberOf)
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'GiB'));
     }
@@ -40,7 +40,7 @@ class Binary extends System
      * @param int $numberOf
      * @return Binary
      */
-    public static function terabytes($numberOf): Binary
+    public static function terabytes($numberOf)
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'TiB'));
     }
@@ -49,7 +49,7 @@ class Binary extends System
      * @param int $numberOf
      * @return Binary
      */
-    public static function petabytes($numberOf): Binary
+    public static function petabytes($numberOf)
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'PiB'));
     }
@@ -58,7 +58,7 @@ class Binary extends System
      * @param int $numberOf
      * @return Binary
      */
-    public static function exabytes($numberOf): Binary
+    public static function exabytes($numberOf)
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'EiB'));
     }
@@ -67,7 +67,7 @@ class Binary extends System
      * @param int $numberOf
      * @return Binary
      */
-    public function __construct(int $numberOfBytes, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
+    public function __construct($numberOfBytes, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
     {
         parent::__construct($numberOfBytes, new Formatter(self::scale(), $formatWithPrecision));
     }
@@ -76,7 +76,7 @@ class Binary extends System
     /**
      * @return PowerScale
      */
-    public static function scale(): PowerScale
+    public static function scale()
     {
         return self::$scale = self::$scale ?: new PowerScale(self::$base, self::$suffixes, self::COMPUTE_WITH_PRECISION);
     }

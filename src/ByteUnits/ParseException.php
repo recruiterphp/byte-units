@@ -2,6 +2,8 @@
 
 namespace ByteUnits;
 
-class ParseException extends \InvalidArgumentException
+use Exception;
+
+class ParseException extends Exception
 {
 }

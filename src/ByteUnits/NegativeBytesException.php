@@ -2,6 +2,8 @@
 
 namespace ByteUnits;
 
-class NegativeBytesException extends \DomainException
+use Exception;
+
+class NegativeBytesException extends Exception
 {
 }

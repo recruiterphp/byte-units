@@ -4,11 +4,7 @@ namespace ByteUnits;
 
 use Exception;
 
-/**
- * @throws ConversionException
- * @throws Exception
- */
-function box(mixed $something): System
+function box($something)
 {
     if (is_integer($something)) {
         return bytes($something);
@@ -16,32 +12,30 @@ function box(mixed $something): System
     if (is_string($something)) {
         return parse($something);
     }
-    if ($something instanceof System) {
+    if (is_object($something) && ($something instanceof System)) {
         return $something;
     }
     throw new ConversionException();
 }
 
-/**
- * @throws NegativeBytesException
- */
-function bytes($numberOf): Metric
+function bytes($numberOf)
 {
     return new Metric($numberOf);
 }
 
 /**
- * @throws ParseException
- * @throws \ReflectionException
+ * @param $bytesAsString
+ * @return System
+ * @throws Exception
  */
-function parse(string $bytesAsString): System
+function parse($bytesAsString)
 {
+    $lastParseException = null;
     $parsers = [Metric::parser(), Binary::parser()];
-    /** @var Parser $parser */
     foreach ($parsers as $parser) {
         try {
             return $parser->parse($bytesAsString);
-        } catch (\ReflectionException|ParseException $e) {
+        } catch (\Exception $e) {
             $lastParseException = $e;
         }
     }

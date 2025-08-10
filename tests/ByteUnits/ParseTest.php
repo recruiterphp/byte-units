@@ -12,26 +12,17 @@ class ParseTest extends TestCase
         $this->assertEquals(Metric::bytes(1250000), parse('1.25MB'));
     }
 
-    /**
-     * @throws \ReflectionException
-     */
     public function testParseInBinarySystem()
     {
         $this->assertEquals(Binary::bytes(1024), parse('1.00KiB'));
         $this->assertEquals(Binary::bytes(1310720), parse('1.25MiB'));
     }
 
-    /**
-     * @throws \ReflectionException
-     */
     public function testParseWithoutUnit()
     {
         $this->assertEquals(Metric::bytes(1000), parse('1000'));
     }
 
-    /**
-     * @throws \ReflectionException
-     */
     public function testParseWithSeparator()
     {
         $this->assertEquals(Metric::bytes(1000), parse('1.00 kB'));
@@ -39,9 +30,6 @@ class ParseTest extends TestCase
         $this->assertEquals(Metric::bytes(1000), parse('1.00~~~kB'));
     }
 
-    /**
-     * @throws \ReflectionException
-     */
     public function testInvalidByteFormat()
     {
         $this->expectException(ParseException::class);

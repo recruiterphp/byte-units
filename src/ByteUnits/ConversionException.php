@@ -2,6 +2,8 @@
 
 namespace ByteUnits;
 
-class ConversionException extends \InvalidArgumentException
+use Exception;
+
+class ConversionException extends Exception
 {
 }

@@ -24,9 +24,6 @@ class BoxingTest extends TestCase
         $this->assertEquals($byteUnitInBinarySystem, box($byteUnitInBinarySystem));
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testBoxAnObjectThatIsNotAByteUnit()
     {
         $this->expectException(ConversionException::class);
