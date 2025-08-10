@@ -10,17 +10,16 @@ permissions:
   contents: read
 
 jobs:
-  strategy:
-    matrix:
-      php_version:
-        - 8.3
-        - 8.4
   build:
+    strategy:
+      matrix:
+        php_version:
+          - 8.3
+          - 8.4
     runs-on: ubuntu-latest
-
     env:
       COMPOSE_FILE: compose.yaml
-      PHP_VERSION=${{ matrix.php_version }}
+      PHP_VERSION: ${{ matrix.php_version }}
 
     steps:
     - uses: actions/checkout@v4
