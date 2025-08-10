@@ -2,9 +2,9 @@
 
 namespace ByteUnits;
 
-class PowerScale
+final readonly class PowerScale
 {
-    public function __construct(private $base, private $scale, private $precision)
+    public function __construct(private int $base, private array $scale, private ?int $precision)
     {
     }
 
@@ -21,7 +21,7 @@ class PowerScale
         );
     }
 
-    public function scaleFromUnit($quantity, $unit)
+    public function scaleFromUnit($quantity, string $unit)
     {
         return $quantity * bcpow(
             $this->base,
@@ -30,7 +30,7 @@ class PowerScale
         );
     }
 
-    public function isKnownUnit($unitAsString)
+    public function isKnownUnit(string $unitAsString): bool
     {
         return preg_match(
             '/^(?:' . implode('|', array_keys($this->scale)) . ')$/i',
@@ -60,7 +60,7 @@ class PowerScale
         }
     }
 
-    public function isBaseUnit($unit)
+    public function isBaseUnit(string $unit): bool
     {
         return !isset($this->scale[$unit]) || 0 === $this->scale[$unit];
     }

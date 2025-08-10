@@ -4,9 +4,13 @@ namespace ByteUnits;
 
 class Parser
 {
-    private $system;
+    private \ReflectionClass $system;
 
-    public function __construct(private $scale, $system)
+    /**
+     * @param class-string $system
+     * @throws \ReflectionException
+     */
+    public function __construct(private readonly PowerScale $scale, string $system)
     {
         $this->system = new \ReflectionClass($system);
     }
@@ -17,8 +21,9 @@ class Parser
      * @return System
      *
      * @throws ParseException
+     * @throws \ReflectionException
      */
-    public function parse($quantityWithUnit)
+    public function parse(string $quantityWithUnit): System
     {
         if (preg_match('/(?P<quantity>[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\W*(?P<unit>.*)/', $quantityWithUnit, $matches)) {
             $quantity = $matches['quantity'];

@@ -4,9 +4,20 @@ namespace ByteUnits;
 
 class Binary extends System
 {
-    private static $base = 1024;
-    private static $suffixes = ['YiB' => 8, 'ZiB' => 7, 'EiB' => 6, 'PiB' => 5, 'TiB' => 4, 'GiB' => 3, 'MiB' => 2, 'KiB' => 1, 'B' => 0];
-    private static $scale;
+    private const array SUFFIXES = [
+        'YiB' => 8,
+        'ZiB' => 7,
+        'EiB' => 6,
+        'PiB' => 5,
+        'TiB' => 4,
+        'GiB' => 3,
+        'MiB' => 2,
+        'KiB' => 1,
+        'B' => 0,
+    ];
+    private const int BASE = 1024;
+
+    private static ?PowerScale $scale = null;
     private static $parser;
 
     /**
@@ -84,13 +95,10 @@ class Binary extends System
      */
     public static function scale()
     {
-        return self::$scale = self::$scale ?: new PowerScale(self::$base, self::$suffixes, self::COMPUTE_WITH_PRECISION);
+        return self::$scale = self::$scale ?: new PowerScale(self::BASE, self::SUFFIXES, self::COMPUTE_WITH_PRECISION);
     }
 
-    /**
-     * @return Parser
-     */
-    public static function parser()
+    public static function parser(): Parser
     {
         return self::$parser = self::$parser ?: new Parser(self::scale(), self::class);
     }

@@ -4,10 +4,21 @@ namespace ByteUnits;
 
 class Metric extends System
 {
-    private static $base = 1000;
-    private static $suffixes = ['YB' => 8, 'ZB' => 7, 'EB' => 6, 'PB' => 5, 'TB' => 4, 'GB' => 3, 'MB' => 2, 'kB' => 1, 'B' => 0];
-    private static $scale;
-    private static $parser;
+    private const array SUFFIXES = [
+        'YB' => 8,
+        'ZB' => 7,
+        'EB' => 6,
+        'PB' => 5,
+        'TB' => 4,
+        'GB' => 3,
+        'MB' => 2,
+        'kB' => 1,
+        'B' => 0,
+    ];
+    private const int BASE = 1000;
+
+    private static ?PowerScale $scale = null;
+    private static ?Parser $parser = null;
 
     public function __construct($numberOfBytes, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
     {
@@ -16,10 +27,8 @@ class Metric extends System
 
     /**
      * @param int $numberOf
-     *
-     * @return Metric
      */
-    public static function kilobytes($numberOf)
+    public static function kilobytes($numberOf): self
     {
         return new self(self::scale()->scaleFromUnit($numberOf, 'kB'));
     }
@@ -74,18 +83,12 @@ class Metric extends System
         return new self(self::scale()->scaleFromUnit($numberOf, 'EB'));
     }
 
-    /**
-     * @return PowerScale
-     */
-    public static function scale()
+    public static function scale(): PowerScale
     {
-        return self::$scale = self::$scale ?: new PowerScale(self::$base, self::$suffixes, self::COMPUTE_WITH_PRECISION);
+        return self::$scale = self::$scale ?: new PowerScale(self::BASE, self::SUFFIXES, self::COMPUTE_WITH_PRECISION);
     }
 
-    /**
-     * @return Parser
-     */
-    public static function parser()
+    public static function parser(): Parser
     {
         return self::$parser = self::$parser ?: new Parser(self::scale(), self::class);
     }
