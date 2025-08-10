@@ -5,7 +5,7 @@ namespace ByteUnits;
 class Metric extends System
 {
     private static $base = 1000;
-    private static $suffixes = ['YB'=>8, 'ZB'=>7, 'EB'=>6, 'PB'=>5, 'TB'=>4, 'GB'=>3, 'MB'=>2, 'kB'=>1, 'B'=>0];
+    private static $suffixes = ['YB' => 8, 'ZB' => 7, 'EB' => 6, 'PB' => 5, 'TB' => 4, 'GB' => 3, 'MB' => 2, 'kB' => 1, 'B' => 0];
     private static $scale;
     private static $parser;
 
@@ -16,6 +16,7 @@ class Metric extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Metric
      */
     public static function kilobytes($numberOf)
@@ -25,6 +26,7 @@ class Metric extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Metric
      */
     public static function megabytes($numberOf)
@@ -34,6 +36,7 @@ class Metric extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Metric
      */
     public static function gigabytes($numberOf)
@@ -43,6 +46,7 @@ class Metric extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Metric
      */
     public static function terabytes($numberOf)
@@ -52,6 +56,7 @@ class Metric extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Metric
      */
     public static function petabytes($numberOf)
@@ -61,6 +66,7 @@ class Metric extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Metric
      */
     public static function exabytes($numberOf)

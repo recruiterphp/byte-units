@@ -28,7 +28,9 @@
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.47",
-        "phpunit/phpunit": "^12.3"
+        "phpunit/phpunit": "^12.3",
+        "rector/rector": "^2.1",
+        "friendsofphp/php-cs-fixer": "^3.85"
     },
     "replace": {
         "gabrielelana/byte-units": "self.version"

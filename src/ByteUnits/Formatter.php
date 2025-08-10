@@ -22,6 +22,7 @@ class Formatter
     {
         $precision = $this->precisionFrom($howToFormat);
         $byteUnit = $this->byteUnitToFormatTo($numberOfBytes, $howToFormat);
+
         return $this->formatInByteUnit($numberOfBytes, $byteUnit, $precision, $separator);
     }
 
@@ -38,28 +39,33 @@ class Formatter
                 return intval($matches['precision']);
             }
         }
+
         return $this->precision;
     }
 
     private function byteUnitToFormatTo($numberOfBytes, $howToFormat)
     {
         if (is_string($howToFormat)) {
-            if (preg_match("/^(?P<unit>[^\/]+)(?:\/.*$)?/i", $howToFormat, $matches)) {
+            if (preg_match('/^(?P<unit>[^\\/]+)(?:\\/.*$)?/i', $howToFormat, $matches)) {
                 if ($this->converter->isKnownUnit($matches['unit'])) {
                     return $this->converter->normalizeNameOfUnit($matches['unit']);
                 }
             }
         }
+
         return $this->converter->normalUnitFor($numberOfBytes);
     }
 
     private function formatInByteUnit($numberOfBytes, $byteUnit, $precision, $separator)
     {
         $scaled = $this->converter->scaleToUnit($numberOfBytes, $byteUnit);
-        if($byteUnit == null) $byteUnit = "B";
-        if ($this->converter->isBaseUnit($byteUnit)) {
-            return sprintf("%d%s%s", $scaled, $separator, $byteUnit);
+        if (null == $byteUnit) {
+            $byteUnit = 'B';
         }
+        if ($this->converter->isBaseUnit($byteUnit)) {
+            return sprintf('%d%s%s', $scaled, $separator, $byteUnit);
+        }
+
         return sprintf("%.{$precision}f%s%s", $scaled, $separator, $byteUnit);
     }
 }

@@ -2,8 +2,6 @@
 
 namespace ByteUnits;
 
-use ReflectionClass;
-
 class Parser
 {
     private $scale;
@@ -12,12 +10,14 @@ class Parser
     public function __construct($scale, $system)
     {
         $this->scale = $scale;
-        $this->system = new ReflectionClass($system);
+        $this->system = new \ReflectionClass($system);
     }
 
     /**
      * @param string $quantityWithUnit
+     *
      * @return System
+     *
      * @throws ParseException
      */
     public function parse($quantityWithUnit)
@@ -26,6 +26,7 @@ class Parser
             $quantity = $matches['quantity'];
             if ($this->scale->isKnownUnit($matches['unit'])) {
                 $unit = $this->scale->normalizeNameOfUnit($matches['unit']);
+
                 return $this->system->newInstanceArgs([$this->scale->scaleFromUnit($quantity, $unit)]);
             }
             if (empty($matches['unit'])) {

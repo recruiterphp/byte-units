@@ -27,6 +27,6 @@ class BoxingTest extends TestCase
     public function testBoxAnObjectThatIsNotAByteUnit()
     {
         $this->expectException(ConversionException::class);
-        box(new \StdClass());
+        box(new \stdClass());
     }
 }

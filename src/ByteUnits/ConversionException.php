@@ -2,8 +2,6 @@
 
 namespace ByteUnits;
 
-use Exception;
-
-class ConversionException extends Exception
+class ConversionException extends \Exception
 {
 }

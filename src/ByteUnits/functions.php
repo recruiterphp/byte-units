@@ -2,8 +2,6 @@
 
 namespace ByteUnits;
 
-use Exception;
-
 function box($something)
 {
     if (is_integer($something)) {
@@ -24,9 +22,9 @@ function bytes($numberOf)
 }
 
 /**
- * @param $bytesAsString
  * @return System
- * @throws Exception
+ *
+ * @throws \Exception
  */
 function parse($bytesAsString)
 {

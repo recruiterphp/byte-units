@@ -5,12 +5,13 @@ namespace ByteUnits;
 class Binary extends System
 {
     private static $base = 1024;
-    private static $suffixes = ['YiB'=>8, 'ZiB'=>7, 'EiB'=>6, 'PiB'=>5, 'TiB'=>4, 'GiB'=>3, 'MiB'=>2, 'KiB'=>1, 'B'=>0];
+    private static $suffixes = ['YiB' => 8, 'ZiB' => 7, 'EiB' => 6, 'PiB' => 5, 'TiB' => 4, 'GiB' => 3, 'MiB' => 2, 'KiB' => 1, 'B' => 0];
     private static $scale;
     private static $parser;
 
     /**
      * @param int $numberOf
+     *
      * @return Binary
      */
     public static function kilobytes($numberOf)
@@ -20,6 +21,7 @@ class Binary extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Binary
      */
     public static function megabytes($numberOf)
@@ -29,6 +31,7 @@ class Binary extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Binary
      */
     public static function gigabytes($numberOf)
@@ -38,6 +41,7 @@ class Binary extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Binary
      */
     public static function terabytes($numberOf)
@@ -47,6 +51,7 @@ class Binary extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Binary
      */
     public static function petabytes($numberOf)
@@ -56,6 +61,7 @@ class Binary extends System
 
     /**
      * @param int $numberOf
+     *
      * @return Binary
      */
     public static function exabytes($numberOf)
@@ -64,14 +70,14 @@ class Binary extends System
     }
 
     /**
-     * @param int $numberOf
+     * @param int $numberOfBytes
+     *
      * @return Binary
      */
     public function __construct($numberOfBytes, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
     {
         parent::__construct($numberOfBytes, new Formatter(self::scale(), $formatWithPrecision));
     }
-
 
     /**
      * @return PowerScale
@@ -80,7 +86,6 @@ class Binary extends System
     {
         return self::$scale = self::$scale ?: new PowerScale(self::$base, self::$suffixes, self::COMPUTE_WITH_PRECISION);
     }
-
 
     /**
      * @return Parser

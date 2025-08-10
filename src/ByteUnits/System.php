@@ -4,15 +4,16 @@ namespace ByteUnits;
 
 abstract class System
 {
-    const DEFAULT_FORMAT_PRECISION = 2;
-    const COMPUTE_WITH_PRECISION = 10;
+    public const DEFAULT_FORMAT_PRECISION = 2;
+    public const COMPUTE_WITH_PRECISION = 10;
 
     protected $formatter;
     protected $numberOfBytes;
 
     /**
      * @param int|string $numberOf
-     * @param int $formatWithPrecision
+     * @param int        $formatWithPrecision
+     *
      * @return System
      */
     public static function bytes($numberOf, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
@@ -22,6 +23,7 @@ abstract class System
 
     /**
      * @param string $bytesAsString
+     *
      * @return System
      */
     public static function parse($bytesAsString)
@@ -37,39 +39,43 @@ abstract class System
 
     /**
      * @param System $another
+     *
      * @return System
      */
     public function add($another)
     {
         return new static(
             bcadd($this->numberOfBytes, box($another)->numberOfBytes, self::COMPUTE_WITH_PRECISION),
-            $this->formatter->precision()
+            $this->formatter->precision(),
         );
     }
 
     /**
      * @param System $another
+     *
      * @return System
      */
     public function remove($another)
     {
         return new static(
             bcsub($this->numberOfBytes, box($another)->numberOfBytes, self::COMPUTE_WITH_PRECISION),
-            $this->formatter->precision()
+            $this->formatter->precision(),
         );
     }
 
     /**
      * @param System $another
+     *
      * @return bool
      */
     public function isEqualTo($another)
     {
-        return self::compare($this, box($another)) === 0;
+        return 0 === self::compare($this, box($another));
     }
 
     /**
      * @param System $another
+     *
      * @return bool
      */
     public function isGreaterThanOrEqualTo($another)
@@ -79,6 +85,7 @@ abstract class System
 
     /**
      * @param System $another
+     *
      * @return bool
      */
     public function isGreaterThan($another)
@@ -88,6 +95,7 @@ abstract class System
 
     /**
      * @param System $another
+     *
      * @return bool
      */
     public function isLessThanOrEqualTo($another)
@@ -97,6 +105,7 @@ abstract class System
 
     /**
      * @param System $another
+     *
      * @return bool
      */
     public function isLessThan($another)
@@ -107,6 +116,7 @@ abstract class System
     /**
      * @param System $left
      * @param System $right
+     *
      * @return int
      */
     public static function compare($left, $right)
@@ -114,13 +124,14 @@ abstract class System
         return bccomp(
             $left->numberOfBytes,
             $right->numberOfBytes,
-            self::COMPUTE_WITH_PRECISION
+            self::COMPUTE_WITH_PRECISION,
         );
     }
 
     /**
      * @param string $howToFormat
      * @param string $separator
+     *
      * @return string
      */
     public function format($howToFormat = null, $separator = '')
@@ -146,6 +157,7 @@ abstract class System
 
     /**
      * @param string $numberOfBytes
+     *
      * @return int
      */
     private function normalize($numberOfBytes)
@@ -154,15 +166,18 @@ abstract class System
         if (preg_match('/^(?P<coefficient>\d+(?:\.\d+))E\+(?P<exponent>\d+)$/', $numberOfBytes, $matches)) {
             $numberOfBytes = bcmul(
                 $matches['coefficient'],
-                bcpow($base = 10, $matches['exponent'], self::COMPUTE_WITH_PRECISION)
+                bcpow($base = 10, $matches['exponent'], self::COMPUTE_WITH_PRECISION),
             );
         }
+
         return $numberOfBytes;
     }
 
     /**
      * @param int|string $numberOfBytes
+     *
      * @return int|string
+     *
      * @throws NegativeBytesException
      */
     private function ensureIsNotNegative($numberOfBytes)
@@ -170,6 +185,7 @@ abstract class System
         if (bccomp($numberOfBytes, 0) < 0) {
             throw new NegativeBytesException();
         }
+
         return $numberOfBytes;
     }
 
