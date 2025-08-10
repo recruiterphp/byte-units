@@ -40,7 +40,7 @@ readonly class Formatter
         return $this->precision;
     }
 
-    private function byteUnitToFormatTo($numberOfBytes, int|string|null $howToFormat): int|string|null
+    private function byteUnitToFormatTo($numberOfBytes, int|string|null $howToFormat): ?string
     {
         if (is_string($howToFormat)) {
             if (preg_match('/^(?P<unit>[^\/]+)(?:\/.*$)?/i', $howToFormat, $matches)) {

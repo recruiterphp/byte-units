@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ByteUnits;
 
-class Metric extends System
+final class Metric extends System
 {
     private const array SUFFIXES = [
         'YB' => 8,
@@ -22,39 +22,39 @@ class Metric extends System
     private static ?PowerScale $scale = null;
     private static ?Parser $parser = null;
 
-    public function __construct(int|float|string $numberOfBytes, $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
+    public static function bytes(float|int|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
     {
-        parent::__construct($numberOfBytes, new Formatter(self::scale(), $formatWithPrecision));
+        return new self($numberOf, new Formatter(self::scale(), $formatWithPrecision));
     }
 
     public static function kilobytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'kB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'kB'));
     }
 
     public static function megabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'MB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'MB'));
     }
 
     public static function gigabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'GB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'GB'));
     }
 
     public static function terabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'TB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'TB'));
     }
 
     public static function petabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'PB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'PB'));
     }
 
     public static function exabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'EB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'EB'));
     }
 
     public static function scale(): PowerScale
@@ -64,7 +64,7 @@ class Metric extends System
 
     public static function parser(): Parser
     {
-        return self::$parser = self::$parser ?: new Parser(self::scale(), self::class);
+        return self::$parser = self::$parser ?: new Parser(self::scale(), self::bytes(...));
     }
 
     public function asBinary(): Binary

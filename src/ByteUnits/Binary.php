@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ByteUnits;
 
-class Binary extends System
+final class Binary extends System
 {
     private const array SUFFIXES = [
         'YiB' => 8,
@@ -22,39 +22,39 @@ class Binary extends System
     private static ?PowerScale $scale = null;
     private static ?Parser $parser = null;
 
+    public static function bytes(float|int|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
+    {
+        return new self($numberOf, new Formatter(self::scale(), $formatWithPrecision));
+    }
+
     public static function kilobytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'KiB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'KiB'));
     }
 
     public static function megabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'MiB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'MiB'));
     }
 
     public static function gigabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'GiB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'GiB'));
     }
 
     public static function terabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'TiB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'TiB'));
     }
 
     public static function petabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'PiB'));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'PiB'));
     }
 
     public static function exabytes(int|float|string $numberOf): self
     {
-        return new self(self::scale()->scaleFromUnit($numberOf, 'EiB'));
-    }
-
-    public function __construct(int|float|string $numberOfBytes, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION)
-    {
-        parent::__construct($numberOfBytes, new Formatter(self::scale(), $formatWithPrecision));
+        return self::bytes(self::scale()->scaleFromUnit($numberOf, 'EiB'));
     }
 
     public static function scale(): PowerScale
@@ -64,7 +64,7 @@ class Binary extends System
 
     public static function parser(): Parser
     {
-        return self::$parser = self::$parser ?: new Parser(self::scale(), self::class);
+        return self::$parser = self::$parser ?: new Parser(self::scale(), self::bytes(...));
     }
 
     public function asBinary(): Binary

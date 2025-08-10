@@ -10,7 +10,7 @@ class FormatInMetricSystemTest extends TestCase
 {
     public function testBytesNamedConstructor()
     {
-        $this->assertEquals(new Metric(1), Metric::bytes(1));
+        $this->assertEquals('1', Metric::bytes(1)->numberOfBytes());
     }
 
     public function testFormatInMostReadableByteUnit()

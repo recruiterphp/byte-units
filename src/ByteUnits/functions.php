@@ -18,7 +18,7 @@ function box(int|string|System $something): System
 
 function bytes(int|float|string $numberOf): Metric
 {
-    return new Metric($numberOf);
+    return Metric::bytes($numberOf);
 }
 
 function parse(string $bytesAsString): System

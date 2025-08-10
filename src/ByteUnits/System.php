@@ -10,17 +10,19 @@ abstract class System
     public const int COMPUTE_WITH_PRECISION = 10;
     protected string $numberOfBytes;
 
-    public static function bytes(int|float|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static
-    {
-        return new static($numberOf, $formatWithPrecision);
-    }
+    /**
+     * @return Parser<static>
+     */
+    abstract protected static function parser(): Parser;
 
-    public static function parse(string $bytesAsString)
+    abstract public static function bytes(int|float|string $numberOf, int $formatWithPrecision = self::DEFAULT_FORMAT_PRECISION): static;
+
+    public static function parse(string $bytesAsString): static
     {
         return static::parser()->parse($bytesAsString);
     }
 
-    public function __construct(int|float|string $numberOfBytes, protected Formatter $formatter)
+    final protected function __construct(int|float|string $numberOfBytes, protected Formatter $formatter)
     {
         $this->numberOfBytes = $this->ensureIsNotNegative($this->normalize($numberOfBytes));
     }
@@ -29,7 +31,7 @@ abstract class System
     {
         return new static(
             bcadd($this->numberOfBytes, box($another)->numberOfBytes, self::COMPUTE_WITH_PRECISION),
-            $this->formatter->precision(),
+            $this->formatter,
         );
     }
 
@@ -37,7 +39,7 @@ abstract class System
     {
         return new static(
             bcsub($this->numberOfBytes, box($another)->numberOfBytes, self::COMPUTE_WITH_PRECISION),
-            $this->formatter->precision(),
+            $this->formatter,
         );
     }
 

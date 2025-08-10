@@ -58,7 +58,7 @@ final readonly class PowerScale
         return $unitAsString;
     }
 
-    public function normalUnitFor($quantity): int|string|null
+    public function normalUnitFor($quantity): ?string
     {
         if (0 === $quantity) {
             return 'B';

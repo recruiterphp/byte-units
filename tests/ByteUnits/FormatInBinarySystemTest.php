@@ -10,7 +10,7 @@ class FormatInBinarySystemTest extends TestCase
 {
     public function testBytesNamedConstructor()
     {
-        $this->assertEquals(new Binary(1), Binary::bytes(1));
+        $this->assertEquals('1', Binary::bytes(1)->numberOfBytes());
     }
 
     public function testFormatInMostReadableByteUnit()
