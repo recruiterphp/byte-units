@@ -1,9 +1,8 @@
 {
-    "name": "gabrielelana/byte-units",
+    "name": "recruiterphp/byte-units",
     "description": "Library to parse, format and convert byte units",
     "license": "MIT",
     "type": "library",
-    "version": "0.5.0",
     "keywords": [
         "byte",
         "units",
@@ -44,7 +43,7 @@
             "ergebnis/composer-normalize": true
         }
     },
-    "replaces": {
+    "replace": {
         "gabrielelana/byte-units": "self.version"
     }
 }
