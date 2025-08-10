@@ -30,6 +30,9 @@
         "ergebnis/composer-normalize": "^2.47",
         "phpunit/phpunit": "^12.3"
     },
+    "replace": {
+        "gabrielelana/byte-units": "self.version"
+    },
     "autoload": {
         "psr-4": {
             "ByteUnits\\": "src/ByteUnits"
@@ -42,8 +45,5 @@
         "allow-plugins": {
             "ergebnis/composer-normalize": true
         }
-    },
-    "replace": {
-        "gabrielelana/byte-units": "self.version"
     }
 }
