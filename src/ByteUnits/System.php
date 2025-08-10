@@ -8,7 +8,7 @@ abstract class System
     public const COMPUTE_WITH_PRECISION = 10;
 
     protected $formatter;
-    protected $numberOfBytes;
+    protected string $numberOfBytes;
 
     /**
      * @param int|string $numberOf
@@ -31,7 +31,7 @@ abstract class System
         return static::parser()->parse($bytesAsString);
     }
 
-    public function __construct($numberOfBytes, $formatter)
+    public function __construct(int|string $numberOfBytes, $formatter)
     {
         $this->formatter = $formatter;
         $this->numberOfBytes = $this->ensureIsNotNegative($this->normalize($numberOfBytes));
@@ -174,25 +174,18 @@ abstract class System
     }
 
     /**
-     * @param int|string $numberOfBytes
-     *
-     * @return int|string
-     *
      * @throws NegativeBytesException
      */
-    private function ensureIsNotNegative($numberOfBytes)
+    private function ensureIsNotNegative(int|string $numberOfBytes): string
     {
         if (bccomp($numberOfBytes, 0) < 0) {
             throw new NegativeBytesException();
         }
 
-        return $numberOfBytes;
+        return (string) $numberOfBytes;
     }
 
-    /**
-     * @return int|string
-     */
-    public function numberOfBytes()
+    public function numberOfBytes(): string
     {
         return $this->numberOfBytes;
     }
