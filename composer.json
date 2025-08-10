@@ -39,11 +39,16 @@
     },
     "autoload": {
         "psr-4": {
-            "ByteUnits\\": "src/ByteUnits"
+            "ByteUnits\\": "src/"
         },
         "files": [
-            "src/ByteUnits/functions.php"
+            "src/functions.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ByteUnits\\": "tests/"
+        }
     },
     "config": {
         "allow-plugins": {
