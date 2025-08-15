@@ -31,7 +31,7 @@
         "friendsofphp/php-cs-fixer": "^3.85",
         "phpunit/phpunit": "^12.3",
         "rector/rector": "^2.1",
-        "symfony/var-dumper": "^7.3",
+        "symfony/var-dumper": "^7.3 || ^8.0",
         "vimeo/psalm": "^6.13"
     },
     "replace": {
