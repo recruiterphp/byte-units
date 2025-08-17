@@ -28,6 +28,11 @@ class FormatInMetricSystemTest extends TestCase
         $this->assertEquals('3.00YB', Metric::bytes(3000000000000000000000000)->format());
     }
 
+    public function testToString(): void
+    {
+        $this->assertEquals('1.75GB', (string) Metric::bytes(1750000000));
+    }
+
     public function testFormatInMostReadableByteUnitWithPrecision(): void
     {
         $this->assertEquals('1.259566MB', Metric::bytes(1259566)->format(6));

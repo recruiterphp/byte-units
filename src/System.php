@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ByteUnits;
 
-abstract class System
+abstract class System implements \Stringable
 {
     public const int DEFAULT_FORMAT_PRECISION = 2;
     public const int COMPUTE_WITH_PRECISION = 10;
@@ -136,5 +136,10 @@ abstract class System
     public function numberOfBytes(): string
     {
         return $this->numberOfBytes;
+    }
+
+    public function __toString(): string
+    {
+        return $this->format();
     }
 }

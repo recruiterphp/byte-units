@@ -24,6 +24,11 @@ class FormatInBinarySystemTest extends TestCase
         $this->assertEquals('2.00TiB', Binary::bytes(2199023255552)->format());
     }
 
+    public function testToString(): void
+    {
+        $this->assertEquals('1.75GiB', (string) Binary::bytes(1879048192));
+    }
+
     public function testFormatInMostReadableByteUnitWithPrecision(): void
     {
         $this->assertEquals('1.201216MiB', Binary::bytes(1259566)->format(6));
