@@ -13,8 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        php_version:
-          - 8.4
+        php_version: ['8.4', '8.5']
     runs-on: ubuntu-latest
     env:
       COMPOSE_FILE: compose.yaml
@@ -39,8 +38,8 @@ jobs:
         tags: recruiterphp/byte-units-php:php-${{ matrix.php_version }}-latest
         build-args: |
           PHP_VERSION=${{ matrix.php_version }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        cache-from: type=gha,scope=php-${{ matrix.php_version }}
+        cache-to: type=gha,scope=php-${{ matrix.php_version }},mode=max
 
     - name: Run test suite
       run: make test
