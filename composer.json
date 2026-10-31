@@ -27,7 +27,7 @@
         "ext-bcmath": "*"
     },
     "require-dev": {
-        "ergebnis/composer-normalize": "^2.47",
+        "ergebnis/composer-normalize": "^2.56",
         "friendsofphp/php-cs-fixer": "^3.85",
         "phpunit/phpunit": "^12.3",
         "rector/rector": "^2.1",
